@@ -106,12 +106,10 @@ class GssAction implements PrivilegedAction
                 desiredMechs[0] = new org.ietf.jgss.Oid("1.2.840.113554.1.2.2");
             }
  
-            GSSName clientName = manager.createName(user, GSSName.NT_USER_NAME);
-            GSSCredential clientCreds = manager.createCredential(clientName, 8*3600, desiredMechs, GSSCredential.INITIATE_ONLY);
 
             GSSName serverName = manager.createName(kerberosServerName + "@" + host, GSSName.NT_HOSTBASED_SERVICE);
 
-            GSSContext secContext = manager.createContext(serverName, desiredMechs[0], clientCreds, GSSContext.DEFAULT_LIFETIME);
+            GSSContext secContext = manager.createContext(serverName, desiredMechs[0], null, GSSContext.DEFAULT_LIFETIME);
             secContext.requestMutualAuth(true);
 
             byte inToken[] = new byte[0];
